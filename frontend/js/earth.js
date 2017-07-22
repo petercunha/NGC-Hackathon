@@ -28,14 +28,14 @@ $('#toggleSkinBtn').click(function() {
 
 function initialize() {
 
-//Hard Coded Event
+	//Hard Coded Event
 
 	addMajorEvent(
-    [39.281347, -101.263108],
-    "<b>Fire</b><a href='https://news.google.com/news/search/section/q/fire/fire?hl=en&ned=us'> More information </a>"
-    )
+		[39.281347, -101.263108],
+		"<b>Fire</b><a href='https://news.google.com/news/search/section/q/fire/fire?hl=en&ned=us'> More information </a>"
+	)
 
-//end hard coded event
+	//end hard coded event
 
 	// Globe skin
 	enableNaturalSkin()
@@ -114,11 +114,11 @@ function addMajorEvent(location, message) {
 }
 
 function locationToCountry(location, callback) {
-  console.log(location[0] + " and long " + location[1]);
-  $.get("https://ws.geonames.org/countryCodeJSON?lat=" + location[0] + "&lng=" + location[1] + "&username=demo", function(data, status) {
-    console.log(data);
-    callback(data.countryName);
-  });
+	console.log(location[0] + " and long " + location[1]);
+	$.get("/api/" + location[0] + "/" + location[1], function(data, status) {
+		var country = JSON.parse(data).countryName;
+		callback(country);
+	});
 }
 
 socket.on('super-alert', function(msg) {
@@ -127,10 +127,10 @@ socket.on('super-alert', function(msg) {
 	for (var i = 0; i < msg.length; i++) {
 		data[msg[i].name] = msg[i].value;
 	}
-//  locationToCountry(data.location.split(','), function(country) {
-    var eventMsg = "<b>Critical Alert</b><br>Possible " + data.report + "<br /><span style='font-size:10px;color:#999'>Multiple reports recieved from this area</span>";
-  	addMajorEvent(data.location.split(','), eventMsg);
- // })
+	locationToCountry(data.location.split(','), function(country) {
+		var eventMsg = "<b>Critical Alert from " + country + "</b><br>Possible " + data.report + "<br /><span style='font-size:10px;color:#999'>Multiple reports recieved from this area</span>";
+		addMajorEvent(data.location.split(','), eventMsg);
+	})
 });
 
 socket.on('alert', function(msg) {

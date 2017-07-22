@@ -1,10 +1,19 @@
 const express = require('express')
 const app = express()
 const http = require('http').Server(app)
+const request = require('request');
 const path = require('path')
 const io = require('socket.io')(http)
 
 app.use('/', express.static(path.join(__dirname, '..', 'frontend')))
+
+app.get('/api/:lat/:long', function(req, res) {
+	var API_ENDPOINT = "http://ws.geonames.org/countryCodeJSON?lat=" + req.params.lat + "&lng=" + req.params.long + "&username=demo";
+
+	request(API_ENDPOINT, function(error, response, body) {
+		res.send(body);
+	});
+});
 
 io.on('connection', function(socket) {
 	console.log('A user connected')
@@ -23,15 +32,14 @@ io.on('connection', function(socket) {
 	// 			value: getRandomInt(-75, 75) + ',' + getRandomInt(-175, 175)
 	// 		}
 	// 	]
-  //
-  //   io.emit('alert', fake)
-  //   addToEvents(fake)
-  //
-  //   console.log("adding: " + fake);
+	//
+	//   io.emit('alert', fake)
+	//   addToEvents(fake)
+	//
+	//   console.log("adding: " + fake);
 	// }, 250);
 
 	socket.on('msg', function(msg) {
-		console.log(msg);
 		io.emit('alert', msg)
 		addToEvents(msg)
 	})
