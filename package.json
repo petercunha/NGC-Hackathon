@@ -1,0 +1,24 @@
+{
+  "name": "disaster-drop",
+  "version": "1.0.0",
+  "description": "A first responder system",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "NGC Hackers!",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/petercunha/NGC-Hackathon.git"
+  },
+  "engines": {
+    "node": "8.2.1"
+  },
+  "dependencies": {
+    "express": "^4.15.3",
+    "path": "^0.12.7",
+    "socketio": "^1.0.0"
+  }
+}
