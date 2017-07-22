@@ -5,8 +5,13 @@ var options = {
 	zoom: 2.5
 }
 
+var panning = false;
+
+// Enable socket.io
+var socket = io();
+
 // Generate the globe
-var earth = new WE.map('earth_div', options)
+var earth = WE.map('earth_div', options)
 var naturalSkinEnabled = true
 initialize()
 
@@ -22,16 +27,6 @@ $('#toggleSkinBtn').click(function() {
 })
 
 function initialize() {
-	// Generate marker on the globe
-
-	addMajorEvent(
-    [39.281347, -101.263108],
-    "<b>Hey!</b><br>A disaster occurred here.<br /><span style='font-size:10px;color:#999'>Millions have died</span>"
-  )
-
-	addMinorEvent(
-    [46.15700, 5.9765625]
-  )
 
 	// Globe skin
 	enableNaturalSkin()
@@ -39,11 +34,19 @@ function initialize() {
 	// Start a simple rotation animation
 	var before = null
 	requestAnimationFrame(function animate(now) {
-		var c = earth.getPosition()
-		var elapsed = before ? now - before : 0
-		before = now
-		earth.setCenter([c[0], c[1] + 0.1 * (elapsed / 30)])
-		requestAnimationFrame(animate)
+    if (panning) {
+      var ticker = setTimeout(function () {
+        before = null;
+        requestAnimationFrame(animate)
+        ticker = null
+      }, 5200);
+    } else {
+      var c = earth.getPosition()
+  		var elapsed = before ? now - before : 0
+  		before = now
+  		earth.setCenter([c[0], c[1] + 0.07 * (elapsed / 30)])
+  		requestAnimationFrame(animate)
+    }
 	})
 
 	// Remove unwanted text
@@ -84,9 +87,37 @@ function addMinorEvent(location) {
 
 // Triggers popup tooltip with message
 function addMajorEvent(location, message) {
+
+  // Pan to event
+  earth.panTo(location, 1)
+  panning = true;
+
+  var timer = setTimeout(function () {
+    panning = false;
+    timer = null;
+  }, 5000);
+
 	var marker = WE.marker(location).addTo(earth)
 	marker.bindPopup(message, {
 		maxWidth: 300,
 		closeButton: true
 	}).openPopup()
 }
+
+socket.on('super-alert', function(msg) {
+	var data = {};
+  console.log(msg);
+  for (var i = 0; i < msg.length; i++) {
+    data[msg[i].name] = msg[i].value;
+  }
+  var eventMsg = "<b>Critical Alert</b><br>Possible " + data.report + "<br /><span style='font-size:10px;color:#999'>Multiple reports recieved from this area</span>";
+  addMajorEvent(data.location.split(','), eventMsg);
+});
+
+socket.on('alert', function(msg) {
+	var data = {};
+  for (var i = 0; i < msg.length; i++) {
+    data[msg[i].name] = msg[i].value;
+  }
+  addMinorEvent(data.location.split(','));
+});
