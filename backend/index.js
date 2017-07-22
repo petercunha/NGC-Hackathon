@@ -38,7 +38,8 @@ app.get('/reset', function(req, res) {
 io.on('connection', function(socket) {
 	console.log('A user connected')
 
-	// fakeMachine()
+	// Generate fake data
+	fakeMachine()
 
 	socket.on('msg', function(msg) {
 		io.emit('alert', msg)
