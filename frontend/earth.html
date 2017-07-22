@@ -2,64 +2,26 @@
 <html>
 
 <head>
-
-    <!-- WebGL Earth -->
-    <script src="http://www.webglearth.com/v2/api.js"></script>
-    <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-
-
     <title>Huge Disaster!</title>
 
     <!-- Earth style -->
-    <style>
-        html,
-        body {
-            padding: 0;
-            margin: 0;
-        }
-
-        #earth_div {
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background-color: #000;
-            position: absolute !important;
-        }
-    </style>
+    <link rel="stylesheet" href="css/earth.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 
 <body onload="initialize()">
     <div id="earth_div"></div>
+    <button type="button" id="toggleSkinBtn" class="toggleSkinBtn btn btn-default">Toggle Earth view</button>
 
-    <script>
-        function initialize() {
-            var options = {
-                atmosphere: true,
-                center: [0, 0],
-                zoom: 0
-            };
-            var earth = new WE.map('earth_div', options);
-
-            // Generate marker on the globe
-            var marker = WE.marker([51.5, -0.09]).addTo(earth);
-            marker.bindPopup("<b>Hey!</b><br>A disaster occurred here.<br /><span style='font-size:10px;color:#999'>Millions have died</span>", {
-                maxWidth: 300,
-                closeButton: true
-            }).openPopup();
-
-            // Globe thing
-            WE.tileLayer('http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg', {
-                minZoom: 0,
-                maxZoom: 5,
-                attribution: 'NASA'
-            }).addTo(earth);
-
-            $('.cesium-credit-textContainer').remove();
-
-        }
-    </script>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- WebGL Earth -->
+    <script src="http://www.webglearth.com/v2/api.js"></script>
+    <!-- Core Javascript -->
+    <script type="text/javascript" src="js/earth.js"></script>
 </body>
 
 </html>
