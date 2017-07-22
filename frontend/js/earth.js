@@ -70,7 +70,7 @@ function initialize () {
         var c = earth.getPosition()
         var elapsed = before ? now - before : 0
         before = now
-        earth.setCenter([c[0], c[1] + 0.07 * (elapsed / 30)])
+        earth.setCenter([c[0], c[1] + 0.04 * (elapsed / 30)])
         requestAnimationFrame(animate)
       }
     }
