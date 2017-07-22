@@ -13,8 +13,41 @@ body {
     position: absolute !important;
 }
 
-.toggleSkinBtn {
+textarea {
+  border-style: none;
+  border-color: Transparent;
+  overflow: auto;
+  background-color: Transparent;
+  color: darkred !important;
+  font-size: 9px;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace !important;
+  outline: none;
+}
+
+.buttons {
     position: fixed;
     bottom: 5px;
     right: 5px;
+}
+
+.main-wrapper {
+    position: relative;
+    margin: 0 auto;
+}
+.main, .main-wrapper {
+    width: 500px;
+}
+.main {
+    min-height: 500px;
+}
+.side {
+    width: 200px;
+    min-height: 200px;
+    position: absolute;
+    top: 60px;
+    right: -300px;
+}
+.main, .side{
+    text-align: center;
+    padding: 10px;
 }

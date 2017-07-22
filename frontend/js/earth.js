@@ -6,6 +6,7 @@ var options = {
 }
 
 var panning = false;
+var spinEnalbled = true;
 
 // Enable socket.io
 var socket = io();
@@ -26,14 +27,19 @@ $('#toggleSkinBtn').click(function() {
 	}
 })
 
+// Toggle globe spin
+$('#toggleSpinBtn').click(function() {
+	spinEnalbled = !spinEnalbled
+})
+
 function initialize() {
 
 	//Hard Coded Event
 
-	addMajorEvent(
-		[39.281347, -101.263108],
-		"<b>Fire</b><a href='https://news.google.com/news/search/section/q/fire/fire?hl=en&ned=us'> More information </a>"
-	)
+	// addMajorEvent(
+	// 	[39.281347, -101.263108],
+	// 	"<b>Fire</b><a href='https://news.google.com/news/search/section/q/fire/fire?hl=en&ned=us'> More information </a>"
+	// )
 
 	//end hard coded event
 
@@ -43,18 +49,26 @@ function initialize() {
 	// Start a simple rotation animation
 	var before = null
 	requestAnimationFrame(function animate(now) {
-		if (panning) {
+		if (!spinEnalbled) {
 			var ticker = setTimeout(function() {
 				before = null;
 				requestAnimationFrame(animate)
 				ticker = null
-			}, 5200);
+			}, 150);
 		} else {
-			var c = earth.getPosition()
-			var elapsed = before ? now - before : 0
-			before = now
-			earth.setCenter([c[0], c[1] + 0.07 * (elapsed / 30)])
-			requestAnimationFrame(animate)
+			if (panning) {
+				var ticker = setTimeout(function() {
+					before = null;
+					requestAnimationFrame(animate)
+					ticker = null
+				}, 5200);
+			} else {
+				var c = earth.getPosition()
+				var elapsed = before ? now - before : 0
+				before = now
+				earth.setCenter([c[0], c[1] + 0.07 * (elapsed / 30)])
+				requestAnimationFrame(animate)
+			}
 		}
 	})
 
@@ -113,11 +127,21 @@ function addMajorEvent(location, message) {
 	}).openPopup()
 }
 
+function addToDisasterLog(msg) {
+	$("#disasterLog").prepend(msg);
+}
+
 function locationToCountry(location, callback) {
 	console.log(location[0] + " and long " + location[1]);
 	$.get("/api/" + location[0] + "/" + location[1], function(data, status) {
 		var country = JSON.parse(data).countryName;
+		// if (!country || country == "undefined") {
+		// 	var random = ["Europe", "Asia", "North America", "South America", "Africa"]
+		// 	callback(random[Math.floor(Math.random()*random.length)]);
+		// } else {
+		// console.log(country);
 		callback(country);
+		// }
 	});
 }
 
@@ -129,7 +153,11 @@ socket.on('super-alert', function(msg) {
 	}
 	locationToCountry(data.location.split(','), function(country) {
 		var eventMsg = "<b>Critical Alert from " + country + "</b><br>Possible " + data.report + "<br /><span style='font-size:10px;color:#999'>Multiple reports recieved from this area</span>";
-		addMajorEvent(data.location.split(','), eventMsg);
+		if (country && country != "undefined") {
+			console.log("c: " + country);
+			addToDisasterLog("CRITICAL DISASTER in " + country + "\n");
+			addMajorEvent(data.location.split(','), eventMsg);
+		}
 	})
 });
 
@@ -138,5 +166,11 @@ socket.on('alert', function(msg) {
 	for (var i = 0; i < msg.length; i++) {
 		data[msg[i].name] = msg[i].value;
 	}
-	addMinorEvent(data.location.split(','));
+	locationToCountry(data.location.split(','), function(country) {
+		if (country && country != "undefined") {
+			console.log("c: " + country);
+			addToDisasterLog(data.report + " reported in " + country + "\n");
+			addMinorEvent(data.location.split(','));
+		}
+	});
 });

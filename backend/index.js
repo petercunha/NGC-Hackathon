@@ -15,29 +15,35 @@ app.get('/api/:lat/:long', function(req, res) {
 	});
 });
 
+app.get('/reset', function(req, res) {
+	events = [];
+	res.send("ok")
+});
+
 io.on('connection', function(socket) {
 	console.log('A user connected')
 
-	// setInterval(function() {
-	// 	var fake = [{
-	// 			name: 'name',
-	// 			value: 'Bob'
-	// 		},
-	// 		{
-	// 			name: 'report',
-	// 			value: 'Tornado'
-	// 		},
-	// 		{
-	// 			name: 'location',
-	// 			value: getRandomInt(-75, 75) + ',' + getRandomInt(-175, 175)
-	// 		}
-	// 	]
-	//
-	//   io.emit('alert', fake)
-	//   addToEvents(fake)
-	//
-	//   console.log("adding: " + fake);
-	// }, 250);
+	setInterval(function() {
+		var disasters = ['Tornado', "Hurricane", "Earthquake", "Tsunami", "Fire", "Flood"]
+		var fake = [{
+				name: 'name',
+				value: 'Bob'
+			},
+			{
+				name: 'report',
+				value: disasters[Math.floor(Math.random() * disasters.length)]
+			},
+			{
+				name: 'location',
+				value: getRandomInt(-65, 65) + ',' + getRandomInt(-145, 145)
+			}
+		]
+
+		io.emit('alert', fake)
+		addToEvents(fake)
+
+		console.log("adding: " + fake);
+	}, 5000);
 
 	socket.on('msg', function(msg) {
 		io.emit('alert', msg)
