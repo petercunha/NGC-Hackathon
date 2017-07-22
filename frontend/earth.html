@@ -1,24 +1,27 @@
 <!DOCTYPE HTML>
 <html lang="en-US">
-  
+
 <head>
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> 
+    <title>DisasterDrop | Monitor</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
     <!-- Earth style -->
     <link rel="stylesheet" href="css/earth.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <meta name="viewport" content="width=480, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,target-densitydpi=device-dpi, user-scalable=no" />
 </head>
 
 <body>
-    <div id="earth_div"></div>
+    <div id="earth_div" style="position: fixed;"></div>
     <div class="buttons">
-      <button type="button" id="toggleSpinBtn" class="toggleSpinBtn btn btn-default">Toggle Spin</button>
-      <button type="button" id="toggleSkinBtn" class="toggleSkinBtn btn btn-default">Toggle View</button>
+        <button type="button" id="toggleSpinBtn" class="toggleSpinBtn btn btn-default">Toggle Spin</button>
+        <button type="button" id="toggleSkinBtn" class="toggleSkinBtn btn btn-default">Toggle View</button>
     </div>
     <div class="main-wrapper">
         <div class="side">
-          <textarea disabled name="name" rows="8" cols="80" id="disasterLog"></textarea>
+            <textarea disabled name="name" rows="8" cols="80" id="disasterLog"></textarea>
         </div>
     </div>
 

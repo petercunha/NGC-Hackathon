@@ -48,7 +48,7 @@
 
                         <div class='row'>
                             <div class='input-field col s12'>
-                                <input placeholder="Latitude and Longitude" class='validate active' type='text' name='location' id='location' />
+                                <input placeholder="Latitude and Longitude" class='validate active' type='text' name='location' id='location' value="33.892047,-118.377257"/>
                                 <label for='location'>Enter your coordinates</label>
                             </div>
                         </div>
@@ -90,6 +90,14 @@
         $("#submitBtn").click(function(e) {
             e.preventDefault();
 
+            $("#submitBtn").addClass("disabled")
+            $("#submitBtn").text("Processing...")
+            setTimeout(function () {
+              $("#submitBtn").removeClass("disabled")
+              $("#submitBtn").addClass("green")
+              $("#submitBtn").text("Done!")
+            }, 1100);
+
             var formData = $('form').serializeArray();
             socket.emit('msg', formData);
         })
@@ -108,7 +116,7 @@
         }
 
         function error() {
-            alert("Couldn't get location, enter lat. and long. manually");
+          
         }
     </script>
 </body>

@@ -32,6 +32,11 @@ $('#toggleSpinBtn').click(function () {
   spinEnalbled = !spinEnalbled
 })
 
+// Reset tilt button
+$('#resetTiltBtn').click(function () {
+	earth.setTilt(90)
+})
+
 function initialize () {
 	// Hard Coded Event
 
@@ -65,7 +70,7 @@ function initialize () {
         var c = earth.getPosition()
         var elapsed = before ? now - before : 0
         before = now
-        earth.setCenter([c[0], c[1] + 0.07 * (elapsed / 30)])
+        earth.setCenter([c[0], c[1] + 0.04 * (elapsed / 30)])
         requestAnimationFrame(animate)
       }
     }
@@ -130,7 +135,6 @@ function addToDisasterLog (msg) {
 }
 
 function locationToCountry (location, callback) {
-  console.log(location[0] + ' and long ' + location[1])
   $.get('/api/' + location[0] + '/' + location[1], function (data, status) {
     var country = JSON.parse(data).countryName
 		// if (!country || country == "undefined") {
@@ -144,31 +148,47 @@ function locationToCountry (location, callback) {
 }
 
 socket.on('super-alert', function (msg) {
+	console.log("Super alert");
   var data = {}
-  console.log(msg)
   for (var i = 0; i < msg.length; i++) {
     data[msg[i].name] = msg[i].value
   }
   locationToCountry(data.location.split(','), function (country) {
-    var eventMsg = '<b>Critical Alert from ' + country + '</b><br>Possible ' + data.report + "<br /><span style='font-size:10px;color:#999'>Multiple reports recieved from this area</span>"
+
     if (country && country != 'undefined') {
-      console.log('c: ' + country)
+			var eventMsg = '<b>Critical Alert from ' + country + '</b><br>Possible ' + data.report + "<br />" +
+			"<span style='font-size:10px;color:#999'>Multiple reports recieved from this area</span><br />" +
+			"<a target='_blank' href='https://www.redcross.org/donate/donation'><b>Donate</b></a><br />" +
+			"<a target='_blank' href='/news?location=California&event=Wildfire'><b>News feed</b></a>";
+
       addToDisasterLog('CRITICAL DISASTER in ' + country + '\n')
       addMajorEvent(data.location.split(','), eventMsg)
-    }
+    } else {
+			var eventMsg = '<b>Critical Alert from North America</b><br>Possible ' + data.report + "<br />" +
+			"<span style='font-size:10px;color:#999'>Multiple reports recieved from this area</span><br />" +
+			"<a target='_blank' href='https://www.redcross.org/donate/donation'><b>Donate</b></a><br />" +
+			"<a target='_blank' href='/news?location=California&event=Wildfire'><b>News feed</b></a>";
+
+			addToDisasterLog('CRITICAL DISASTER in North America\n')
+      addMajorEvent(data.location.split(','), eventMsg)
+		}
   })
 })
 
 socket.on('alert', function (msg) {
+	console.log("Alert");
+
   var data = {}
   for (var i = 0; i < msg.length; i++) {
     data[msg[i].name] = msg[i].value
   }
   locationToCountry(data.location.split(','), function (country) {
     if (country && country != 'undefined') {
-      console.log('c: ' + country)
       addToDisasterLog(data.report + ' reported in ' + country + '\n')
       addMinorEvent(data.location.split(','))
-    }
+    } else {
+			addToDisasterLog(data.report + ' reported in North America\n')
+      addMinorEvent(data.location.split(','))
+		}
   })
 })
