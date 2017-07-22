@@ -118,10 +118,10 @@ socket.on('super-alert', function(msg) {
 	for (var i = 0; i < msg.length; i++) {
 		data[msg[i].name] = msg[i].value;
 	}
-  locationToCountry(data.location.split(','), function(country) {
-    var eventMsg = "<b>Critical Alert from " + country + "</b><br>Possible " + data.report + "<br /><span style='font-size:10px;color:#999'>Multiple reports recieved from this area</span>";
+  // locationToCountry(data.location.split(','), function(country) {
+    var eventMsg = "<b>Critical Alert</b><br>Possible " + data.report + "<br /><span style='font-size:10px;color:#999'>Multiple reports recieved from this area</span>";
   	addMajorEvent(data.location.split(','), eventMsg);
-  })
+  // })
 });
 
 socket.on('alert', function(msg) {
