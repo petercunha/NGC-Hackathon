@@ -1,9 +1,12 @@
 const express = require('express')
 const app = express()
 const http = require('http').Server(app)
+const favicon = require('serve-favicon')
 const request = require('request')
 const path = require('path')
 const io = require('socket.io')(http)
+
+app.use(favicon(path.join(__dirname, '..', 'frontend', 'favicon.ico')))
 
 app.use('/', express.static(path.join(__dirname, '..', 'frontend')))
 
