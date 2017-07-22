@@ -7,6 +7,14 @@ const io = require('socket.io')(http)
 
 app.use('/', express.static(path.join(__dirname, '..', 'frontend')))
 
+app.get('/earth', function (req, res) {
+	res.sendFile(path.join(__dirname, '..', 'frontend', 'earth.html'));
+})
+
+app.get('/report', function (req, res) {
+	res.sendFile(path.join(__dirname, '..', 'frontend', 'complain.html'));
+})
+
 app.get('/api/:lat/:long', function (req, res) {
   var API_ENDPOINT = 'http://ws.geonames.org/countryCodeJSON?lat=' + req.params.lat + '&lng=' + req.params.long + '&username=demo'
 
