@@ -187,7 +187,7 @@ socket.on('alert', function (msg) {
       addToDisasterLog(data.report + ' reported in ' + country + '\n')
       addMinorEvent(data.location.split(','))
     } else {
-			addToDisasterLog(data.report + ' reported in North America\n')
+			addToDisasterLog(data.report + ' report recieved!\n')
       addMinorEvent(data.location.split(','))
 		}
   })
