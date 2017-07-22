@@ -154,16 +154,22 @@ socket.on('super-alert', function (msg) {
     data[msg[i].name] = msg[i].value
   }
   locationToCountry(data.location.split(','), function (country) {
-    var eventMsg = '<b>Critical Alert from ' + country + '</b><br>Possible ' + data.report + "<br />" +
-		"<span style='font-size:10px;color:#999'>Multiple reports recieved from this area</span><br />" +
-		"<a href='https://www.redcross.org/donate/donation'><b>Donate</b></a><br />" +
-		"<a href='https://news.google.com/news/search/section/q/fire/fire?hl=en&ned=us'><b>News feed</b></a>";
 
     if (country && country != 'undefined') {
+			var eventMsg = '<b>Critical Alert from ' + country + '</b><br>Possible ' + data.report + "<br />" +
+			"<span style='font-size:10px;color:#999'>Multiple reports recieved from this area</span><br />" +
+			"<a target='_blank' href='https://www.redcross.org/donate/donation'><b>Donate</b></a><br />" +
+			"<a target='_blank' href='https://news.google.com/news/search/section/q/fire/fire?hl=en&ned=us'><b>News feed</b></a>";
+
       addToDisasterLog('CRITICAL DISASTER in ' + country + '\n')
       addMajorEvent(data.location.split(','), eventMsg)
     } else {
-			addToDisasterLog('CRITICAL DISASTER\n')
+			var eventMsg = '<b>Critical Alert from North America</b><br>Possible ' + data.report + "<br />" +
+			"<span style='font-size:10px;color:#999'>Multiple reports recieved from this area</span><br />" +
+			"<a target='_blank' href='https://www.redcross.org/donate/donation'><b>Donate</b></a><br />" +
+			"<a target='_blank' href='https://news.google.com/news/search/section/q/fire/fire?hl=en&ned=us'><b>News feed</b></a>";
+
+			addToDisasterLog('CRITICAL DISASTER in North America\n')
       addMajorEvent(data.location.split(','), eventMsg)
 		}
   })
@@ -181,7 +187,7 @@ socket.on('alert', function (msg) {
       addToDisasterLog(data.report + ' reported in ' + country + '\n')
       addMinorEvent(data.location.split(','))
     } else {
-			addToDisasterLog(data.report + ' reported\n')
+			addToDisasterLog(data.report + ' reported in North America\n')
       addMinorEvent(data.location.split(','))
 		}
   })
