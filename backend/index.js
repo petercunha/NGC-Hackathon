@@ -59,6 +59,9 @@ http.listen(port, function() {
 var events = []
 
 function addToEvents(msg) {
+	if (events.length > 1000) {
+		events = events.slice(500, events.length-2);
+	}
 	var data = {}
 	for (var i = 0; i < msg.length; i++) {
 		data[msg[i].name] = msg[i].value
