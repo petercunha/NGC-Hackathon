@@ -32,7 +32,7 @@ function initialize() {
 
 	addMajorEvent(
     [39.281347, -101.263108],
-    "<b>Fire</b><a href = 'news.google.com/news/search/section/q/fire/fire?hl=en&ned=us'> More information </a>"
+    "<b>Fire</b><a href='https://news.google.com/news/search/section/q/fire/fire?hl=en&ned=us'> More information </a>"
     )
 
 //end hard coded event
