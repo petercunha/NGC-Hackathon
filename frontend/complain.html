@@ -90,6 +90,14 @@
         $("#submitBtn").click(function(e) {
             e.preventDefault();
 
+            $("#submitBtn").addClass("disabled")
+            $("#submitBtn").text("Processing...")
+            setTimeout(function () {
+              $("#submitBtn").removeClass("disabled")
+              $("#submitBtn").addClass("green")
+              $("#submitBtn").text("Done!")
+            }, 1100);
+
             var formData = $('form').serializeArray();
             socket.emit('msg', formData);
         })
