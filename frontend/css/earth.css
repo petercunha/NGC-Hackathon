@@ -15,7 +15,6 @@ body {
 
 .toggleSkinBtn {
     position: fixed;
-    display: table;
-    left: 90%;
-    bottom: 0;
+    bottom: 5px;
+    right: 5px;
 }
