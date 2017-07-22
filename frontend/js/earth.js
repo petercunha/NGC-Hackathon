@@ -55,7 +55,7 @@ function initialize() {
 
 function enableNaturalSkin() {
 	// Shows natural earth picture
-	WE.tileLayer('http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg', {
+	WE.tileLayer('https://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg', {
 		minZoom: 0,
 		maxZoom: 5,
 		attribution: 'NASA'
@@ -64,7 +64,7 @@ function enableNaturalSkin() {
 
 function enableCountrySkin() {
 	// Shows countries
-	WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	WE.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		minZoom: 0,
 		maxZoom: 5,
 		attribution: 'NASA'
@@ -106,7 +106,7 @@ function addMajorEvent(location, message) {
 
 function locationToCountry(location, callback) {
   console.log(location[0] + " and long " + location[1]);
-  $.get("http://ws.geonames.org/countryCodeJSON?lat=" + location[0] + "&lng=" + location[1] + "&username=demo", function(data, status) {
+  $.get("https://ws.geonames.org/countryCodeJSON?lat=" + location[0] + "&lng=" + location[1] + "&username=demo", function(data, status) {
     console.log(data);
     callback(data.countryName);
   });
