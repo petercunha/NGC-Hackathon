@@ -15,6 +15,10 @@ app.get('/report', function(req, res) {
 	res.sendFile(path.join(__dirname, '..', 'frontend', 'complain.html'));
 })
 
+app.get('/news', function(req, res) {
+	res.sendFile(path.join(__dirname, '..', 'frontend', 'more_info.html'));
+})
+
 app.get('/api/:lat/:long', function(req, res) {
 	var API_ENDPOINT = 'http://ws.geonames.org/countryCodeJSON?lat=' + req.params.lat + '&lng=' + req.params.long + '&username=demo'
 

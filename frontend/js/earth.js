@@ -159,7 +159,7 @@ socket.on('super-alert', function (msg) {
 			var eventMsg = '<b>Critical Alert from ' + country + '</b><br>Possible ' + data.report + "<br />" +
 			"<span style='font-size:10px;color:#999'>Multiple reports recieved from this area</span><br />" +
 			"<a target='_blank' href='https://www.redcross.org/donate/donation'><b>Donate</b></a><br />" +
-			"<a target='_blank' href='https://news.google.com/news/search/section/q/fire/fire?hl=en&ned=us'><b>News feed</b></a>";
+			"<a target='_blank' href='/news?location=California&event=Wildfire'><b>News feed</b></a>";
 
       addToDisasterLog('CRITICAL DISASTER in ' + country + '\n')
       addMajorEvent(data.location.split(','), eventMsg)
@@ -167,7 +167,7 @@ socket.on('super-alert', function (msg) {
 			var eventMsg = '<b>Critical Alert from North America</b><br>Possible ' + data.report + "<br />" +
 			"<span style='font-size:10px;color:#999'>Multiple reports recieved from this area</span><br />" +
 			"<a target='_blank' href='https://www.redcross.org/donate/donation'><b>Donate</b></a><br />" +
-			"<a target='_blank' href='https://news.google.com/news/search/section/q/fire/fire?hl=en&ned=us'><b>News feed</b></a>";
+			"<a target='_blank' href='/news?location=California&event=Wildfire'><b>News feed</b></a>";
 
 			addToDisasterLog('CRITICAL DISASTER in North America\n')
       addMajorEvent(data.location.split(','), eventMsg)
