@@ -62,7 +62,7 @@ function fakeMachine() {
 
 		io.emit('alert', fake)
 		addToEvents(fake)
-	}, 5000)
+	}, 8000)
 }
 
 var port = process.env.PORT || 3000
