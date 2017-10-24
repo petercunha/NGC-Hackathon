@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node backend/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "NGC Hackers!",
   "license": "MIT",
@@ -21,6 +23,8 @@
     "path": "^0.12.7",
     "request": "^2.81.0",
     "serve-favicon": "^2.4.3",
-    "socketio": "^1.0.0"
-  }
+    "socketio": "^1.0.0",
+    "snyk": "^1.45.0"
+  },
+  "snyk": true
 }
