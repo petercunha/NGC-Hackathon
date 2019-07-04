@@ -24,7 +24,7 @@
     "request": "^2.81.0",
     "serve-favicon": "^2.4.3",
     "socketio": "^1.0.0",
-    "snyk": "^1.45.0"
+    "snyk": "^1.189.0"
   },
   "snyk": true
 }
